@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Flow | Editor</title>
+        <link rel="stylesheet" href="editorstyle.css">
+    </head>
+
+    <body>
+        <div id="toolbar">
+            <p id="filebutton" class="toolbarbutton">File</p>
+            <p id="editbutton" class="toolbarbutton">Edit</p>
+            <p id="optionbutton" class="toolbarbutton">Options</p>
+            <button onclick=playAnim() id="playbutton">▶️</button>
+        </div>
+
+        <div id="editor">
+            <div id="editortoparea" class="editortopsect">
+                <div id="animcodeeditor" class="editortopsect">
+                    <p id="animcodetitle">Animation code editor</p>
+                    <textarea id="animcodetext">{}</textarea>
+                </div>
+
+                <div id="previewarea" class="editortopsect">
+                    <h1 id="obj1" class="animitems">:3</h1>
+                </div>
+
+                <div id="asseteditor" class="editortopsect">
+                    <p id="assettitle">Animation code editor</p>
+                </div>
+            </div>
+
+            <div id="timeline" class="editorbottomsect">
+            </div>
+        </div>
+
+        <script>
+            function sleep(ms) {
+                return new Promise(resolve => setTimeout(resolve, ms));
+            }
+
+            async function playAnim() {
+                const jsonString = document.getElementById("animcodetext").value;
+                const jsonObject = JSON.parse(jsonString);
+                const itemLength = Object.keys(jsonObject).length;
+                for (let step = 1; step < itemLength; step++) {
+                    const itemID = jsonObject[step].id;
+                    const itemX = jsonObject[step].x;
+                    const itemY = jsonObject[step].y;
+                    document.getElementById(itemID).style.left = itemX + "px";
+                    document.getElementById(itemID).style.top = itemY + "px";
+                    await sleep(100);
+                }
+            }
+
+            document.getElementById("previewarea").onclick = function(e) {
+                console.log(e.offsetX, e.offsetY);
+                
+                const jsonString = document.getElementById("animcodetext").value;
+                const jsonObject = JSON.parse(jsonString);
+                
+                // Calculate the current number of items
+                const itemLength = Object.keys(jsonObject).length;
+                
+                // Create a new object to append
+                jsonObject[itemLength + 1] = {
+                    id: "obj1",
+                    x: e.offsetX,
+                    y: e.offsetY
+                };
+                
+                // Update the value of the input area with the modified JSON
+                document.getElementById("animcodetext").value = JSON.stringify(jsonObject);
+            };
+        </script>
+    </body>
+</html>
