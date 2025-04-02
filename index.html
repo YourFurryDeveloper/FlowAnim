@@ -22,11 +22,35 @@
                 </div>
 
                 <div id="previewarea" class="editortopsect">
-                    <h1 id="obj1" class="animitems">:3</h1>
                 </div>
 
                 <div id="asseteditor" class="editortopsect">
-                    <p id="assettitle">Animation code editor</p>
+                    <p id="assettitle">Current element</p>
+                    <select id="elemSelect">
+                    </select>
+
+                    <hr style="margin: 10px; margin-top: 20px; margin-bottom: 20px;">
+
+                    <p id="assettitle">Create new element</p>
+                    <p id="formText">Element type</p>
+                    <select id="elemCreate">
+                        <option value="h1">Text</option>
+                        <option value="img">Image</option>
+                    </select>
+                    <p id="formText">Element attributes</p>
+                    <div id="textAttribs">
+                        <input type="text" placeholder="Text content" id="textElemContn" class="formTextInp">
+                        <input type="number" placeholder="Font size" id="textElemSize" class="formNumInp">
+                        <input type="color" placeholder="Text color" id="textElemColor" class="formColInp">
+                        <input type="text" placeholder="Element ID" id="textElemId" class="formTextInp">
+                    </div>
+                    <div id="imgAttribs" style="display: none;">
+                        <input type="text" placeholder="Image URL" id="imgElemUrl" class="formTextInp">
+                        <input type="number" placeholder="Image size" id="imgElemSize" class="formNumInp">
+                        <input type="text" placeholder="Element ID" id="imgElemId" class="formTextInp" style="margin-top: 10px;">
+                    </div>
+                    <br>
+                    <button id="createElemBtn" onclick=createElem()>Create</button>
                 </div>
             </div>
 
@@ -40,6 +64,7 @@
             }
 
             async function playAnim() {
+                console.log(":3");
                 const jsonString = document.getElementById("animcodetext").value;
                 const jsonObject = JSON.parse(jsonString);
                 const itemLength = Object.keys(jsonObject).length;
@@ -49,7 +74,71 @@
                     const itemY = jsonObject[step].y;
                     document.getElementById(itemID).style.left = itemX + "px";
                     document.getElementById(itemID).style.top = itemY + "px";
+                    console.log(":3");
                     await sleep(100);
+                }
+            }
+
+            function updateElements() {
+                let parentDiv = document.getElementById("previewarea");
+                let childElements = parentDiv.querySelectorAll("*");
+                let ids = Array.from(childElements)
+                            .map(el => el.id)
+                            .filter(id => id);
+
+                let parent = document.getElementById("elemSelect");
+                parent.innerHTML = ""; // Clear existing options
+
+                for (let i = 0; i < ids.length; i++) { // Use i < ids.length
+                    let newOption = document.createElement("option");
+                    newOption.textContent = ids[i]; // Use textContent instead of innerHTML
+                    newOption.value = ids[i];
+                    parent.appendChild(newOption);
+                }
+            }
+
+            function createElem() {
+                console.log("done :3");
+                const scene = document.getElementById("previewarea");
+                const elemType = document.getElementById("elemCreate").value;
+                if (elemType === "h1") {
+                    const elemText = document.getElementById("textElemContn").value;
+                    const elemSize = document.getElementById("textElemSize").value;
+                    const elemColor = document.getElementById("textElemColor").value;
+                    const elemId = document.getElementById("textElemId").value;
+
+                    let newElement = document.createElement("h1");
+                    newElement.textContent = elemText;
+                    newElement.style.fontSize = elemSize + "px";
+                    newElement.style.color = elemColor;
+                    newElement.id = elemId;
+                    newElement.className = "animitems";
+                    scene.appendChild(newElement);
+
+                    let parent = document.getElementById("elemSelect");
+                    let newOption = document.createElement("option");
+                    newOption.textContent = elemId;
+                    newOption.value = elemId;
+                    parent.appendChild(newOption);
+                    console.log("done :3");
+                } else if (elemType === "img") {
+                    const elemUrl = document.getElementById("imgElemUrl").value;
+                    const elemSize = document.getElementById("imgElemSize").value;
+                    const elemId = document.getElementById("imgElemId").value;
+
+                    let newElement = document.createElement("img");
+                    newElement.src = elemUrl;
+                    newElement.style.height = elemSize + "px";
+                    newElement.id = elemId;
+                    newElement.className = "animitems";
+                    scene.appendChild(newElement);
+
+                    let parent = document.getElementById("elemSelect");
+                    let newOption = document.createElement("option");
+                    newOption.textContent = elemId;
+                    newOption.value = elemId;
+                    parent.appendChild(newOption);
+                    console.log("done :3");
                 }
             }
 
@@ -58,19 +147,31 @@
                 
                 const jsonString = document.getElementById("animcodetext").value;
                 const jsonObject = JSON.parse(jsonString);
+                const objId = document.getElementById("elemSelect").value;
                 
                 // Calculate the current number of items
                 const itemLength = Object.keys(jsonObject).length;
                 
                 // Create a new object to append
                 jsonObject[itemLength + 1] = {
-                    id: "obj1",
+                    id: objId,
                     x: e.offsetX,
                     y: e.offsetY
                 };
                 
                 // Update the value of the input area with the modified JSON
                 document.getElementById("animcodetext").value = JSON.stringify(jsonObject);
+            };
+
+            document.getElementById("elemCreate").onchange = function(e) {
+                const elemOpt = document.getElementById("elemCreate").value;
+                if (elemOpt === "h1") {
+                    document.getElementById("textAttribs").style.display = "unset";
+                    document.getElementById("imgAttribs").style.display = "none";
+                } else if (elemOpt === "img") {
+                    document.getElementById("imgAttribs").style.display = "unset";
+                    document.getElementById("textAttribs").style.display = "none";
+                }
             };
         </script>
     </body>

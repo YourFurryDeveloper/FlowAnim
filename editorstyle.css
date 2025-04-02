@@ -119,10 +119,50 @@ html {
 }
 
 #timeline {
-    position: fixed;
+    position: relative;
     background-color: rgb(35, 88, 149);
     left: 0;
     right: 0;
+}
+
+#elemSelect, #elemCreate {
+    margin-left: 5px;
+    outline: none;
+    border-radius: 5px;
+    width: 100px;
+}
+
+#formText {
+    font-size: 12px;
+    font-weight: 500;
+    color: whitesmoke;
+    margin-left: 5px;
+}
+
+.formTextInp, .formNumInp {
+    font-size: 12px;
+    font-weight: 500;
+    margin-left: 5px;
+    border-radius: 5px;
+    outline: none;
+}
+
+.formNumInp {
+    width: 70px;
+}
+
+.formColInp {
+    margin-left: 5px;
+    margin-top: 10px;
+    border-radius: 5px;
+    outline: none;
+}
+
+#createElemBtn {
+    width: 60px;
+    height: 20px;
+    margin-left: 5px;
+    margin-top: 10px;
 }
 
 /* ANIMATION ELEMENT STYLING */
