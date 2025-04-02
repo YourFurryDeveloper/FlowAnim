@@ -1,0 +1,134 @@
+html {
+    position: fixed;
+    font-family: sans-serif;
+    background-color: rgb(45, 49, 54);
+}
+
+#toolbar {
+    position: fixed;
+    display: flex;
+    top: 0;
+    background-color: rgb(49, 54, 60);
+    left: 0;
+    right: 0;
+    height: 30px;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+#playbutton {
+    margin-left: 30px;
+    width: 25px;
+    height: 25px;
+    background-color: transparent;
+    outline: none;
+    font-size: 10px;
+}
+
+.toolbarbutton {
+    font-size: 14px;
+    color: white;
+    cursor: pointer;
+    margin-left: 10px;
+    outline: none;
+}
+
+#editor {
+    position: fixed;
+    background-color: rgb(99, 102, 105);
+    top: 30px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.editortopsect {
+    top: 30px;
+    bottom: 250px;
+}
+
+#editortoparea {
+    position: fixed;
+    background-color: rgb(35, 88, 149);
+    left: 0;
+    right: 0;
+}
+
+#animcodeeditor {
+    position: fixed;
+    background-color: rgb(37, 39, 43);
+    left: 0;
+    right: 80%;
+    border: 1px solid rgb(99, 102, 105);
+}
+
+#animcodetitle {
+    position: relative;
+    color: white;
+    font-size: 14px;
+    font-weight: 150;
+    top: -5px;
+    left: 5px;
+}
+
+#animcodetext {
+    position: fixed;
+    border: none;
+    border-top: 1px solid rgb(99, 102, 105);
+    background-color: transparent;
+    top: 65px;
+    padding-top: 5px;
+    left: 0;
+    right: 80%;
+    bottom: 250px;
+    padding-left: 5px;
+    color: white;
+    outline: none;
+    resize: none;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+#previewarea {
+    position: fixed;
+    background-color: rgb(45, 49, 54);
+    left: 20%;
+    right: 20%;
+    border: 1px solid rgb(99, 102, 105);
+}
+
+#asseteditor {
+    position: fixed;
+    background-color: rgb(37, 39, 43);
+    left: 80%;
+    right: 0;
+    border: 1px solid rgb(99, 102, 105);
+}
+
+#assettitle {
+    position: relative;
+    color: white;
+    font-size: 14px;
+    font-weight: 150;
+    top: -5px;
+    left: 5px;
+}
+
+.editorbottomsect {
+    top: 0;
+    bottom: 0;
+}
+
+#timeline {
+    position: fixed;
+    background-color: rgb(35, 88, 149);
+    left: 0;
+    right: 0;
+}
+
+/* ANIMATION ELEMENT STYLING */
+
+.animitems {
+    position: relative;
+    left: 0;
+    top: 0;
+}
