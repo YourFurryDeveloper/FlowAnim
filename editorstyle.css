@@ -1,5 +1,4 @@
 html {
-    position: fixed;
     font-family: sans-serif;
     background-color: rgb(45, 49, 54);
 }
@@ -33,18 +32,49 @@ html {
     outline: none;
 }
 
+.toolbarbutton:hover {
+    background-color: rgb(33, 36, 39);
+}
+
+
+.toolbarmenubutton {
+    font-size: 14px;
+    color: white;
+    cursor: pointer;
+    margin-left: 10px;
+    outline: none;
+}
+
+.toolbarmenubutton:hover {
+    background-color: rgb(33, 36, 39);
+}
+
+/* TOOLBAR MENUS */
+
+#filemenu {
+    position: fixed;
+    top: 30px;
+    left: 10px;
+    width: 100px;
+    height: 50px;
+    background-color: rgb(49, 54, 60);
+    z-index: 1000;
+}
+
 #editor {
     position: fixed;
-    background-color: rgb(99, 102, 105);
+    /*background-color: rgb(99, 102, 105);*/
     top: 30px;
     bottom: 0;
     left: 0;
     right: 0;
+    z-index: 900;
 }
 
 .editortopsect {
     top: 30px;
     bottom: 250px;
+    z-index: 900;
 }
 
 #editortoparea {
