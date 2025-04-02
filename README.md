@@ -4,7 +4,7 @@ A simple and easy to use online animator
 # Guide
 
 Contents
-[The basics](#The Basics)
+[The basics](#the-basics)
 
 
 ## The Bascics
