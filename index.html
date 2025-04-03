@@ -55,6 +55,18 @@
                     </div>
                     <br>
                     <button id="createElemBtn" onclick=createElem()>Create</button>
+
+                    <hr style="margin: 10px; margin-top: 20px; margin-bottom: 20px;">
+
+                    <p id="assettitle">Current keyframe</p>
+                    <div style="display: flex; justify-content: flex-start;">
+                        <p style="font-size: 12px; font-weight: 500; color: whitesmoke; margin-left: 5px; margin-top: -7px;">X:</p>
+                        <input type="number" id="keyframeXtext" style="width: 50px; height: 12px; margin-left: 5px; outline: none; margin-top: -7px;">
+                    </div>
+                    <div style="display: flex; justify-content: flex-start;">
+                        <p style="font-size: 12px; font-weight: 500; color: whitesmoke; margin-left: 5px; margin-top: -7px;">Y:</p>
+                        <input type="number" id="keyframeYtext" style="width: 50px; height: 12px; margin-left: 5px; outline: none; margin-top: -7px;">
+                    </div>
                 </div>
             </div>
 
@@ -150,11 +162,6 @@
                     parent.appendChild(newOption);
                     console.log("done :3");
                 }
-
-                let parent = document.getElementById("timeline");
-                let newDiv = document.createElement("option");
-                newDiv.id = "keyframe";
-                parent.appendChild(newDiv);
             }
 
             document.getElementById("previewarea").onclick = function(e) {
@@ -174,8 +181,14 @@
                     y: e.offsetY
                 };
                 
-                // Update the value of the input area with the modified JSON
                 document.getElementById("animcodetext").value = JSON.stringify(jsonObject);
+
+                let parent = document.getElementById("timeline");
+                let newDiv = document.createElement("div");
+                newDiv.setAttribute('name', itemLength + 1);
+                //newDiv.localName = jsonObject[itemLength + 1];
+                newDiv.id = "keyframe";
+                parent.appendChild(newDiv);
             };
 
             document.getElementById("elemCreate").onchange = function(e) {
@@ -189,6 +202,18 @@
                 }
             };
 
+            function isTouching(elem1, elem2) {
+                const rect1 = elem1.getBoundingClientRect();
+                const rect2 = elem2.getBoundingClientRect();
+
+                return !(
+                    rect1.top > rect2.bottom ||
+                    rect1.bottom < rect2.top ||
+                    rect1.right < rect2.left ||
+                    rect1.left > rect2.right
+                );
+            }
+
             let isPlayheadDrag = false;
 
             document.getElementById("playhead").onmousedown = function(e) {
@@ -199,10 +224,53 @@
                 isPlayheadDrag = false;
             };
 
+            let curkeyframenum = "";
+
             document.getElementById("playhead").onmousemove = function(e) {
                 if (isPlayheadDrag) {
                     document.getElementById("playhead").style.left = e.clientX - 2 + "px";
+
+                    const specificElement = document.getElementById('playhead');
+                    const otherElements = document.querySelectorAll('#keyframe');
+                    const collisionPairs = [];
+
+                    for (let otherElement of otherElements) {
+                        if (isTouching(specificElement, otherElement)) {
+                            collisionPairs.push(otherElement.getAttribute("name"));
+                        }
+                    }
+                    
+                    if (collisionPairs.length > 0) {
+                        collisionPairs.forEach(keyname => {
+                            //console.log(`Element ${specificElement.id} is touching element ${keyname}`);
+                            const jsonString = document.getElementById("animcodetext").value;
+                            const jsonObject = JSON.parse(jsonString);
+                            const xtext = document.getElementById("keyframeXtext");
+                            const ytext = document.getElementById("keyframeYtext");
+                            xtext.value = jsonObject[keyname].x;
+                            ytext.value = jsonObject[keyname].y;
+                            document.getElementById(jsonObject[keyname].id).style.left = jsonObject[keyname].x + "px";
+                            document.getElementById(jsonObject[keyname].id).style.top = jsonObject[keyname].y + "px";
+                            curkeyframenum = keyname;
+                        });
+                    } else {
+                        //console.log(`Element ${specificElement.id} is not touching any other elements.`);
+                    }
                 }
+
+                document.getElementById("keyframeXtext").onchange = function(e) {
+                    const jsonString = document.getElementById("animcodetext").value;
+                    const jsonObject = JSON.parse(jsonString);
+                    jsonObject[curkeyframenum].x = document.getElementById("keyframeXtext").value;
+                    document.getElementById("animcodetext").value = JSON.stringify(jsonObject);
+                };
+
+                document.getElementById("keyframeYtext").onchange = function(e) {
+                    const jsonString = document.getElementById("animcodetext").value;
+                    const jsonObject = JSON.parse(jsonString);
+                    jsonObject[curkeyframenum].y = document.getElementById("keyframeYtext").value;
+                    document.getElementById("animcodetext").value = JSON.stringify(jsonObject);
+                };
             };
         </script>
     </body>
