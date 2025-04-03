@@ -210,8 +210,8 @@ html {
 }
 
 #keyframe {
-    width: 5px;
-    height: 15px;
+    width: 10px;
+    height: 20px;
     border-radius: 5px;
     background-color: rgb(204, 161, 81);
     position: relative;
