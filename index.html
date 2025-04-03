@@ -59,10 +59,13 @@
             </div>
 
             <div id="timeline" class="editorbottomsect">
+                <div id="playhead"></div>
             </div>
         </div>
 
         <script>
+            let FPS = 100;
+
             function sleep(ms) {
                 return new Promise(resolve => setTimeout(resolve, ms));
             }
@@ -72,6 +75,7 @@
                 const jsonString = document.getElementById("animcodetext").value;
                 const jsonObject = JSON.parse(jsonString);
                 const itemLength = Object.keys(jsonObject).length;
+                document.getElementById("playhead").style.left = "25px";
                 for (let step = 1; step < itemLength; step++) {
                     const itemID = jsonObject[step].id;
                     const itemX = jsonObject[step].x;
@@ -79,7 +83,9 @@
                     document.getElementById(itemID).style.left = itemX + "px";
                     document.getElementById(itemID).style.top = itemY + "px";
                     console.log(":3");
-                    await sleep(100);
+                    playheadPos = document.getElementById("playhead").style.left.split("px").join("");
+                    document.getElementById("playhead").style.left = parseInt(playheadPos) + 15 + "px";
+                    await sleep(FPS);
                 }
             }
 
@@ -144,6 +150,11 @@
                     parent.appendChild(newOption);
                     console.log("done :3");
                 }
+
+                let parent = document.getElementById("timeline");
+                let newDiv = document.createElement("option");
+                newDiv.id = "keyframe";
+                parent.appendChild(newDiv);
             }
 
             document.getElementById("previewarea").onclick = function(e) {
@@ -175,6 +186,22 @@
                 } else if (elemOpt === "img") {
                     document.getElementById("imgAttribs").style.display = "unset";
                     document.getElementById("textAttribs").style.display = "none";
+                }
+            };
+
+            let isPlayheadDrag = false;
+
+            document.getElementById("playhead").onmousedown = function(e) {
+                isPlayheadDrag = true;
+            };
+
+            document.getElementById("playhead").onmouseup = function(e) {
+                isPlayheadDrag = false;
+            };
+
+            document.getElementById("playhead").onmousemove = function(e) {
+                if (isPlayheadDrag) {
+                    document.getElementById("playhead").style.left = e.clientX - 2 + "px";
                 }
             };
         </script>
