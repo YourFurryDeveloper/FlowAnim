@@ -75,6 +75,7 @@ html {
     top: 30px;
     bottom: 250px;
     z-index: 900;
+    position: relative;
 }
 
 #editortoparea {
@@ -143,18 +144,6 @@ html {
     left: 5px;
 }
 
-.editorbottomsect {
-    top: 0;
-    bottom: 0;
-}
-
-#timeline {
-    position: relative;
-    background-color: rgb(35, 88, 149);
-    left: 0;
-    right: 0;
-}
-
 #elemSelect, #elemCreate {
     margin-left: 5px;
     outline: none;
@@ -194,6 +183,53 @@ html {
     margin-left: 5px;
     margin-top: 10px;
 }
+
+/* TIMELINE */
+
+.editorbottomsect {
+    height: 250px;
+    bottom: 0;
+}
+
+#playhead {
+    position: fixed;
+    width: 7px;
+    background-color: white;
+    height: 250px;
+    bottom: 0;
+    left: 15px;
+    cursor: ew-resize;
+}
+
+#timeline {
+    position: fixed;
+    display: flex;
+    left: 0;
+    right: 0;
+    flex-wrap: wrap;
+}
+
+#keyframe {
+    width: 5px;
+    height: 15px;
+    border-radius: 5px;
+    background-color: rgb(204, 161, 81);
+    position: relative;
+    margin-top: 20px;
+    left: 25px;
+    margin-left: 5px;
+}
+
+#keyframeRow {
+    display: flex;
+    position: absolute;
+    justify-content: flex-start;
+    height: fit-content;
+    left: 0;
+    right: 0;
+}
+
+/* ---------- */
 
 /* ANIMATION ELEMENT STYLING */
 
